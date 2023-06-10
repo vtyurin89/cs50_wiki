@@ -8,3 +8,9 @@ def index(request):
         "entries": util.list_entries()
     })
 
+
+def show_entry(request, entry):
+    context = {
+        'entry': entry,
+    }
+    return render(request, "encyclopedia/show_entry.html", context)
