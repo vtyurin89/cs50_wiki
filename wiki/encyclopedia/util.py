@@ -2,6 +2,7 @@ import re
 
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+from django.urls import reverse
 
 
 def list_entries():
@@ -35,3 +36,31 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+
+def get_url(entry_name):
+    """
+    Returns url of the entry.
+    """
+    return reverse('show_entry', kwargs={'entry_name': entry_name})
+
+
+def get_url_for_edit(entry_name):
+    """
+    Returns url of the editing page of the entry.
+    """
+    return reverse('edit_page', kwargs={'entry_name': entry_name})
+
+
+def search_entries_dict(search_q):
+    """
+    Returns a dictionary of entries that have the query as a substring.
+    With their URLs.
+    """
+    _, filenames = default_storage.listdir("entries")
+    result_dict = dict()
+    for filename in filenames:
+        formatted_filename = re.sub(r"\.md$", "", filename)
+        if filename.endswith(".md") and search_q.lower() in formatted_filename.lower():
+            result_dict[formatted_filename] = get_url(formatted_filename)
+    return result_dict

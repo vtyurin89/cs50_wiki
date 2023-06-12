@@ -36,3 +36,16 @@ textarea {
 .sidebar h2 {
     margin-top: 5px;
 }
+
+/* New entry form */
+
+.new-entry-form {
+    display: inline-block;
+    min-width: 20%;
+    vertical-align: top;
+    margin: 5px;
+}
+
+.new-entry-textarea {
+    height: 100px;
+}
